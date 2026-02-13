@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPF • Post</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  background:black;
+  color:#d4af37;
+  font-family:Arial;
+}
+
+.container{
+  max-width:800px;
+  margin:60px auto;
+  padding:20px;
+}
+
+h1{
+  font-family:'Cinzel', serif;
+}
+
+img{
+  width:100%;
+  margin:20px 0;
+  border:1px solid #ff0000;
+}
+
+.back{
+  margin-top:20px;
+  display:inline-block;
+  border:1px solid #ff0000;
+  padding:6px 12px;
+  cursor:pointer;
+  font-family:'Cinzel', serif;
+}
+.back:hover{
+  background:#ff0000;
+  color:black;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1 id="title"></h1>
+  <img id="image">
+  <div id="content"></div>
+  <div class="back" onclick="history.back()">← Voltar</div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const postId = params.get("id");
+
+fetch("posts.json")
+  .then(res => res.json())
+  .then(data => {
+
+    const post = data.posts.find(p => p.id === postId);
+
+    if(post){
+      document.getElementById("title").innerText = post.title;
+      document.getElementById("image").src = post.image;
+      document.getElementById("content").innerHTML = post.content;
+    }
+
+  });
+</script>
+
+</body>
+</html>
